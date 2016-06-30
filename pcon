@@ -1,21 +1,15 @@
-if [[ "$1" == "" ]]
-then
-echo BAD INPUT
-echo Example Entry: pcon hold_music.wav
-exit
-fi
-if [[ $1 == *.wav ]]
-then
-x="$1"
-y=${x%.*}
-echo Converting wav file
-sox $x -r 8000 -c 1 -b 16 -S Converted_$y.wav
-rm $x
-echo Conversion Completed
+echo "Is this a greeting or MoH? [Y,N]"
+read input
+if [[ $input == "Y" || $input == "y" ]]; then
+echo "Doing stuff" 
+(sh Greeting_converter $1)
 else
-x="$1"
-y=${x%.*}
-echo Attempting to convert file
-sox $x -r 8000 -c 1 -S Converted_$y.wav
-rm $x
+echo "Is this a ringtone? [Y,N]"
+read stuff
+if [[ $stuff == "Y" || $stuff == "y" ]]; then 
+(sh Ringtone_converter $1)
+else
+echo "Error: invalid input"
+echo
+fi
 fi
