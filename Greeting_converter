@@ -6,16 +6,16 @@ exit
 fi
 if [[ $1 == *.wav ]]
 then
-x="$1"
-y=${x%.*}
+a="$1"
+b=$(basename $a)
+c=${b%.*}
 echo Converting wav file
-sox $x -r 8000 -c 1 -b 16 -S Converted_$y.wav
-rm $x
+sox $a -r 8000 -c 1 -b 16 -S Converted_$c.wav && rm $a
 echo Conversion Completed
 else
 x="$1"
-y=${x%.*}
+y=$(basename $x)
+z=${y%.*}
 echo Attempting to convert file
-sox $x -r 8000 -c 1 -S Converted_$y.wav
-rm $x
+sox $x -r 8000 -c 1 -S Converted_$z.wav && rm $x
 fi

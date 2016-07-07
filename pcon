@@ -1,13 +1,12 @@
 echo "Is this a greeting or MoH? [Y,N]"
 read input
 if [[ $input == "Y" || $input == "y" ]]; then
-echo "Doing stuff" 
-(sh Greeting_converter $1)
+Greeting_converter $1
 else
 echo "Is this a ringtone? [Y,N]"
 read stuff
 if [[ $stuff == "Y" || $stuff == "y" ]]; then 
-(sh Ringtone_converter $1)
+Ringtone_converter $1
 else
 echo "Error: invalid input"
 echo
