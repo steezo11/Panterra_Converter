@@ -1,7 +1,6 @@
 echo "Is this a greeting or MoH? [Y,N]"
 read input
 if [[ $input == "Y" || $input == "y" ]]; then
-#Greeting_converter $1
 if [[ "$1" == "" ]]
 then
 echo Error:No file specified. 
@@ -23,12 +22,10 @@ z=${y%.*}
 echo Attempting to convert file
 sox $x -r 8000 -c 1 -S Converted_$z.wav && rm $x
 fi
-##
 else
 echo "Is this a ringtone for a Polycom phone? [Y,N]"
 read stuff
 if [[ $stuff == "Y" || $stuff == "y" ]]; then 
-#Ringtone_converter $1
 if [[ "$1" == "" ]]
 then
 echo Error:No file specified.
@@ -43,7 +40,7 @@ a="$1"
 b=$(basename $a)
 c=${b%.*}
 echo Converting wav file
-sox $a -r 8000 -c 1 -b 16 -e u-law -S ULAW_$c.wav trim 00:01 00:40 && rm $a
+sox $a -r 8000 -c 1 -b 16 -e u-law -S Ringtone_ULAW_$c.wav trim 00:01 00:40 && rm $a
 echo Conversion Completed
 else
 #x="$1"
@@ -53,7 +50,7 @@ y=$(basename $x)
 z=${y%.*}
 echo Attempting to convert file
 echo $1
-sox $x -r 8000 -c 1 -e u-law -S ULAW_$z.wav trim 00:01 00:40 && rm $x
+sox $x -r 8000 -c 1 -e u-law -S Ringtone_ULAW_$z.wav trim 00:01 00:40 && rm $x
 fi
 else
 echo "Error: invalid input"
