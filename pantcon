@@ -1,0 +1,65 @@
+#!/usr/bin/env python
+#PCON was built for converting audio files to Panterra Networks format
+#
+#Code written orignially by: Sean "Snuffy" McCullom
+#Python script created by: Christopher "Steezo" Leininger
+#
+#
+#            *****EXAMPLE*****
+#          python script.py audio.file 
+# 
+import os
+import sys
+#
+#FUCTION TO REMOVE FILE TYPE NAME
+def rmFileType(thestring, ending):
+	if thestring.endswith(ending):
+		return thestring[:-len(ending)]
+	return thestring
+#
+#
+#
+#IF THERE ARE TWO ARGUMENTS (script.py + file.audio) CONTINUE WITH FILE CONVERSION
+if len(sys.argv) == 2 :
+	originalFile = sys.argv[1]
+	greetingMoH = raw_input("Is this a greeting or MoH? [Y,N] ")
+	#GREETING OR MOH
+	if greetingMoH == "y" or greetingMoH == "Y":
+		#IF A WAV FILE
+		if originalFile.endswith(".wav"):
+			#RUNS SOX COMMAND FOR WAV
+			os.system("sox "+ originalFile + " -r 8000 -c 1 -b 16 -S Converted_" + originalFile)
+		#ANYTHING BUT A WAV
+		else:
+			#REMOVES FILE EXTENSION
+			convertedFile = originalFile
+			convertedFile = rmFileType(convertedFile, ".mp3")
+			convertedFile = rmFileType(convertedFile, ".gsm")
+			#RUNS SOX COMMAND 'CATCH ALL'
+			os.system("sox "+ originalFile + " -V -r 8000 -c 1 -e signed-integer -S Converted_" + convertedFile + ".wav")
+#			print convertedFile
+	#RINGTONE FOR POLYCOM PHONE
+	elif greetingMoH == "n" or greetingMoH == "N":
+		#print greetingMoH
+		if originalFile.endswith(".wav"):
+                        #RUNS SOX COMMAND FOR WAV
+                        os.system("sox "+ originalFile + " -r 8000 -c 1 -b 16 -e u-law -S Ringtone_ULAW_" + originalFile + " trim 00:01 00:40")
+                else:
+                        #REMOVES FILE EXTENSION
+                        convertedFile = originalFile
+                        convertedFile = rmFileType(convertedFile, ".mp3")
+                        convertedFile = rmFileType(convertedFile, ".gsm")
+                        #RUNS SOX COMMAND 'CATCH ALL'
+                        os.system("sox "+ originalFile + " -r 8000 -c 1 -e u-law -S Ringtone_ULAW_" + convertedFile + ".wav trim 00:01 00:40")
+	else:
+		print "ERROR: Please select Y or N"
+#
+#if attempt to enter multiple files, throws an error code
+elif len(sys.argv) > 2 :
+	print "ERROR: Please convert one file at a time"
+#
+#if no file is entered, throw error asking for a file
+else:
+	print "ERROR: Please provide file to convert"
+
+	
